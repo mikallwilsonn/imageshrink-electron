@@ -1,11 +1,17 @@
-const { app, BrowserWindow } = require( 'electron' );
+// ----
+// Dependencies
+const { app, BrowserWindow, Menu } = require( 'electron' );
 
 
-// Set env
+// ----
+// Set environment
 process.env.NODE_ENV = 'development';
 const isDev = process.env.NODE_ENV !== 'production' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
 
+
+// ----
+// Creating the window
 let mainWindow;
 
 function createMainWindow() {
@@ -21,7 +27,32 @@ function createMainWindow() {
 }
 
 
-app.on( 'ready', createMainWindow );
+// ----
+// App settings
+app.on( 'ready', () => { 
+    createMainWindow();
+
+    const mainMenu = Menu.buildFromTemplate( menu );
+    Menu.setApplicationMenu( mainMenu );
+
+    mainWindow.on( 'closed', () => mainWindow = null );
+});
+
+
+// Menu
+const menu = [
+     ...( isMac ? [ { role: 'appMenu' }] : []),
+    {
+        label: 'File',
+        submenu: [
+            {
+                label: 'Quit',
+                click: () => app.quit()
+            },
+        ],
+    },
+];
+
 
 app.on( 'window-all-closed', () => {
     if ( isMac ) {
@@ -33,7 +64,6 @@ app.on( 'activate', () => {
     if ( BrowserWindow.getAllWindows().length === 0 ) {
         createMainWindow();
     }
-})
-
+});
 
 app.allowRendererProcessReuse = true;
