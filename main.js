@@ -49,16 +49,18 @@ app.on( 'ready', () => {
 // Menu
 const menu = [
      ...( isMac ? [ { role: 'appMenu' }] : []),
-    {
-        label: 'File',
-        submenu: [
-            {
-                label: 'Quit',
-                accelerator: 'CmdOrCtrl+w',
-                click: () => app.quit()
-            },
-        ],
-    },
+    { role: 'fileMenu' },
+    ...( isDev ? [
+        {
+            label: 'Developer',
+            submenu: [
+                { role: 'reload' },
+                { role: 'forcereload' },
+                { type: 'separator' },
+                { role: 'toggledevtools' }
+            ]
+        }
+    ] : [] )
 ];
 
 
