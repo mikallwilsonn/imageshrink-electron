@@ -1,6 +1,6 @@
 // ----
 // Dependencies
-const { app, BrowserWindow, Menu } = require( 'electron' );
+const { app, BrowserWindow, Menu, ipcMain } = require( 'electron' );
 
 
 // ----
@@ -98,6 +98,16 @@ const menu = [
 ];
 
 
+// ----
+// IPC
+ipcMain.on( 'image:minimize', ( event, options ) => {
+    console.log( options );
+});
+
+
+
+// ----
+// Window
 app.on( 'window-all-closed', () => {
     if ( isMac ) {
       app.quit();

@@ -6,6 +6,8 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+
 		<link rel="stylesheet" href="css/all.min.css" />
 
 		<link rel="stylesheet" href="css/materialize.min.css" />
@@ -67,10 +69,25 @@
 		<script src="js/materialize.min.js"></script>
 
 		<script>
-			const path = require( 'path' );
-			const os = reqiure( 'os' );
+			document.querySelector( '#output-path' )
+				.innerText = path.join( os.homedir(), 'imageshrink' );
 
-			document.querySelector( '#output-path' ).innerText = path.join(os.homedir(), 'imageshrink');
+			const form = document.querySelector( '#image-form' );
+			const slider = document.querySelector( '#slider' );
+			const img = document.querySelector( '#img' );
+
+			form.addEventListener( 'submit', ( event ) => {
+				event.preventDefault();
+
+				const imgPath = img.files[0].path;
+				const quality = slider.value;
+
+				console.log( imgPath, quality );
+			});
+
+			ipcRenderer.send( 'image:minimize', {
+				imgPath, quality
+			});
 		</script>
 	</body>
 </html>
