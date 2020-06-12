@@ -65,5 +65,12 @@
 		</div>
 
 		<script src="js/materialize.min.js"></script>
+
+		<script>
+			const path = require( 'path' );
+			const os = reqiure( 'os' );
+
+			document.querySelector( '#output-path' ).innerText = path.join(os.homedir(), 'imageshrink');
+		</script>
 	</body>
 </html>
