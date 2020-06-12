@@ -12,7 +12,7 @@ const log = require( 'electron-log' );
 
 // ----
 // Set environment
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'production';
 const isDev = process.env.NODE_ENV !== 'production' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
 
@@ -133,7 +133,7 @@ async function shrinkImage({ imgPath, quality, dest }) {
         shell.openPath( dest );
         mainWindow.webContents.send( 'image:done' );
     } catch ( error ) {
-        console.log( error );
+        mainWindow.webContents.send( 'image:fail' );
         log.error( error );
     }
 }

@@ -102,6 +102,13 @@
 					html: `Image resized to ${ slider.value }% quality.`
 				});
 			});
+
+			// On Fail
+			ipcRenderer.on( 'image:fail', () => {
+				M.toast({
+					html: 'An error occurred and your image could not be optimized.'
+				});
+			});
 		</script>
 	</body>
 </html>
